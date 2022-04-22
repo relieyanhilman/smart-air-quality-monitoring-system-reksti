@@ -11,15 +11,13 @@ import {Chart as ChartJS} from 'chart.js/auto'
 class LineChart extends Component{
     constructor(props){
         super(props);
-        this.state = {
-
-        }
+        
     }
     render(){
         return(
             <div>
                 <Line data={this.props.chartData} />
-                <input type="submit" value="get data" onClick={this.props.onSubmit} />
+                <input type="submit" value="get data" onClick={() => this.props.onSubmit()} />
             </div>
         )
     }

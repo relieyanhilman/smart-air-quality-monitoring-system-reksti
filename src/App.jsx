@@ -23,12 +23,17 @@ class App extends Component {
         ],
         };
     }
-
+    
     getTemperature = () =>{
-      fetch('http://airquality-g3.herokuapp.com/condition', {
-        mode: 'no-cors'
+      fetch('http://airquality-g3.herokuapp.com/condition')
+      .then(response => response.json())
+      .then(result => {
+        console.log('pertama', this.state)
+        this.setState(Object.assign(this.state.datasets[0], {data : result.map((data) => data.temperature)}));
+        // this.setState(Object.assign(this.state, {label : 'temperature')}))
+        console.log(this.state);
       })
-      .then(response => console.log(response.json()))
+      // .then(result => console.log(result[0].temperature))
     }
   
 
