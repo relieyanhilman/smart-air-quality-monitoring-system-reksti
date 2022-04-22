@@ -1,40 +1,81 @@
-import React, {useState} from 'react';
+import React, {useState, Component}  from 'react';
 import "./App.css";
-import BarChart from "./components/BarChart";
+
 import LineChart from "./components/LineChart";
 
 import {UserData} from './Data'
 
 
-function App() {
+class App extends Component {
+  constructor(){
+    super();
+    this.state={
+      labels: UserData.map((data) => data.year),
+      datasets: [
+            {
+            label: "Users Gained",
+            data: UserData.map((data) => data.userGain),
+            backgroundColor: ["rgba(75,192,192,1)",
+          ],
+          borderColor: "black",
+          borderWidth: 2
+          },
+        ],
+        };
+    }
 
-  const [userData, setUserData] = useState({
-    labels: UserData.map((data) => data.year),
-    datasets: [
-      {
-      label: "Users Gained",
-      data: UserData.map((data) => data.userGain),
-      backgroundColor: ["rgba(75,192,192,1)",
-        "#ecf0f1",
-        "#50AF95",
-        "#f3ba2f",
-        "#2a71d0"
-    ],
-    borderColor: "black",
-    borderWidth: 2
-    },
-  ],
-  });
+    getTemperature = () =>{
+      fetch('http://airquality-g3.herokuapp.com/condition', {
+        mode: 'no-cors'
+      })
+      .then(response => console.log(response.json()))
+    }
+  
+
+  // const [userData1, setUserData1] = useState({
+  //   labels: UserData.map((data) => data.year),
+  //   datasets: [
+  //     {
+  //     label: "Users Gained",
+  //     data: UserData.map((data) => data.userGain),
+  //     backgroundColor: ["rgba(75,192,192,1)",
+  //   ],
+  //   borderColor: "black",
+  //   borderWidth: 2
+  //   },
+  // ],
+  // });
+
+  // getTemperature = () => {
+
+  // }
+  render() {
   return (
     <div className="App">
-      <div style={{width: 700}}>
-      <BarChart chartData={userData} />
+      <div className="flex-container">
+      <div style={{width: 500}}>
+      <LineChart chartData={this.state} onSubmit={this.getTemperature} />
       </div>
-      <div style={{width: 700}}>
-      <LineChart chartData={userData} />
+
+      <div style={{width: 500}}>
+      <LineChart chartData={this.state} />
+      </div>
+
+      <div style={{width: 500}}>
+      <LineChart chartData={this.state} />
+      </div>
+
+      <div style={{width: 500}}>
+      <LineChart chartData={this.state} />
+      </div>
+
+      <div style={{width: 500}}>
+      <LineChart chartData={this.state} />
+      </div>
+
       </div>
     </div>
-  );
-}
+  )};
+  }
 
 export default App;
